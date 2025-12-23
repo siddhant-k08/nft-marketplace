@@ -3,6 +3,48 @@ import { useMemo } from "react"
 import NFTBox from "./NFTBox"
 import Link from "next/link"
 
+interface NFTItem {
+    rindexerId: string
+    seller: string
+    nftAddress: string
+    price: string
+    tokenId: string
+    contractAddress: string
+    txHash: string
+    blockNumber: string
+}
+
+interface BoughtCancelled {
+    nftAddress: string
+    tokenId: string
+}
+
+interface NFTQueryResponse {
+    data: {
+        allItemListeds: {
+            nodes: NFTItem[]
+        },
+        allItemBought: {
+            nodes: NFTItem[]
+        },
+        allItemCanceled: {
+            nodes: NFTItem[]
+        }
+    }
+}
+
+async function fetchNFTs(): Promise<NFTQueryResponse> {
+    const response = await fetch("/api/graphql", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            query: GET_RECENT_NFTS,
+        }),
+    })
+}
+
 const GET_RECENT_NFTS = `
 query AllItemsListeds {
  allItemListeds(first: 20, orderBy: [BLOCK_NUMBER_DESC, TX_INDEX_DESC]) {
