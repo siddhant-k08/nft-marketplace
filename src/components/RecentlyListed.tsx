@@ -17,13 +17,17 @@ query AllItemsListeds {
     blockNumber
   }
  }
- itemCanceled(nodeId: $nodeId) {
-  nftAddress
-  tokenId
+ itemCanceled {
+  nodes{
+   nftAddress
+   tokenId
+  }
  }
- itemBought(nodeId: $itemBoughtNodeId2) {
-  tokenId
-  nftAddress
+ itemBought {
+  nodes{
+   tokenId
+   nftAddress
+  }
  }
 }
 `
